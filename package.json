@@ -1,0 +1,20 @@
+{
+  "name": "link-autocomplete",
+  "main": "./lib/link-autocomplete",
+  "version": "0.0.1",
+  "description": "Autocomplete for internal links in documentation. Requres Autocomplete-Plus",
+  "repository": "https://github.com/atom/link-autocomplete",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provide"
+      }
+    }
+  },
+  "dependencies": {
+  }
+}
