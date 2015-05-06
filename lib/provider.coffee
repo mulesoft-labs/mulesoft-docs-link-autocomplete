@@ -14,30 +14,38 @@ module.exports =
     return unless prefix?.length
     prefix = prefix.substr(5)    #get rid of 'link:''
     console.log 'new prefix = ' + prefix
-    answers = []  #to hold indexes with results
-
+    suggestionList = []  #to hold indexes with results
 
     for listIndex of $topic
       if @matchWords($topic[listIndex], prefix)
         console.log 'found a match'
-        suggestion =
-          text: $url + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
-          displayText: $topic[listIndex]  #Cloudhub Overview   #topic title
-          leftLabel: $section[listIndex]  #'CloudHub'      #section
-          rightLabel: $name[listIndex].substr(0, $name[listIndex].length-5) # 'cloudhub-overview'   #file name  less .adoc
-          description: 'Internal links to other Docs'
-        return([suggestion])
+        suggestionList.push(@addSuggestion(listIndex))
+      else if @matchWords($section[listIndex], prefix)
+        console.log 'matches section name'
+        suggestionList.push(@addSuggestion(listIndex))
+
+    suggestionList[0]
+
+  addSuggestion: (listIndex) ->
+    suggestion =
+      text: $url + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
+      displayText: $topic[listIndex]  #Cloudhub Overview   #topic title
+      leftLabel: $section[listIndex]  #'CloudHub'      #section
+      rightLabel: $name[listIndex].substr(0, $name[listIndex].length-5) # 'cloudhub-overview'   #file name  less .adoc
+      description: 'Internal links to other Docs'
+    return([suggestion])
 
 
   loadCompletions: ->
     docData = fs.readFileSync('/Users/nearnshaw/.atom/packages/link-autocomplete/content_list.csv').toString()
     $lines = docData.split("\n")
     for i of $lines
-      $fields = $lines[i].split(',')
-      $topic.push($fields[0])
-      $section.push($fields[1])
-      $name.push($fields[2])
-      $url.push($fields[3])
+      if $lines[i]
+        $fields = $lines[i].split(',')
+        $topic.push($fields[0])
+        $section.push($fields[1])
+        $name.push($fields[2])
+        $url.push($fields[3])
     console.log 'csv list has ' + $lines.length + ' entries'
     console.log $name[0]
     console.log $section[3]
