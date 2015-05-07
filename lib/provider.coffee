@@ -1,3 +1,4 @@
+#_ = require 'underscore-plus'
 $topic = []
 $section = []
 $name = []
@@ -7,6 +8,7 @@ $url = []
 
 module.exports =
   selector: '.source.asciidoc'
+  excludeLowerPriority: true
 
   getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix}) ->
     #console.log 'old prefix' + prefix
@@ -23,8 +25,15 @@ module.exports =
       else if @matchWords($section[listIndex], prefix)
         console.log 'matches section name'
         suggestionList.push(@addSuggestion(listIndex))
-
     suggestionList[0]
+
+    # resultCompletions = []
+    # for {value} in suggestionList
+    #   resultCompletions = resultCompletions.concat(value) if Array.isArray(value)
+    # resultCompletions
+    #_.uniq(resultCompletions)
+
+
 
   addSuggestion: (listIndex) ->
     suggestion =
