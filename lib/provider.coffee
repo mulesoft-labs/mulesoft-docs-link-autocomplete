@@ -37,7 +37,7 @@ module.exports =
 
   addSuggestion: (listIndex) ->
     suggestion =
-      text: $url + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
+      text: $url[listIndex] + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
       displayText: $topic[listIndex]  #Cloudhub Overview   #topic title
       leftLabel: $section[listIndex]  #'CloudHub'      #section
       rightLabel: $name[listIndex].substr(0, $name[listIndex].length-5) # 'cloudhub-overview'   #file name  less .adoc
