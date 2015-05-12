@@ -1,13 +1,23 @@
-#_ = require 'underscore-plus'
+
+#IMPORTANT!!!!
+#============================================
+# please change the line below to the path of the CSV list in your system:
+csvPath = "/Users/nearnshaw/.atom/packages/link-autocomplete/content_list.csv"
+#============================================
+
+# csv input format : <pretty section name>, <topic title>, <filename>, <complete file path>
+# eg: CloudHub, CloudHuv Overview, cloudhub-overview, http://www.mulesoft.org/documentation/display/current/cloudhub/cloudhub-overview
+
+
+
 $topic = []
 $section = []
 $name = []
 $url = []
-# input format : <pretty section name>, <topic title>, <filename>, <complete file path>
-
 
 module.exports =
   selector: '.source.asciidoc'
+  inclusionPriority: 1
   excludeLowerPriority: true
 
   getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix}) ->
@@ -22,10 +32,11 @@ module.exports =
       if @matchWords($topic[listIndex], prefix)
         console.log 'found a match'
         suggestionList.push(@addSuggestion(listIndex))
-      else if @matchWords($section[listIndex], prefix)
+    for listIndex of $topic
+      if @matchWords($section[listIndex], prefix)
         console.log 'matches section name'
         suggestionList.push(@addSuggestion(listIndex))
-    suggestionList[0]
+    suggestionList
 
     # resultCompletions = []
     # for {value} in suggestionList
@@ -38,15 +49,16 @@ module.exports =
   addSuggestion: (listIndex) ->
     suggestion =
       text: $url[listIndex] + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
+      replacementText: "cualquiera"
       displayText: $topic[listIndex]  #Cloudhub Overview   #topic title
       leftLabel: $section[listIndex]  #'CloudHub'      #section
       rightLabel: $name[listIndex].substr(0, $name[listIndex].length-5) # 'cloudhub-overview'   #file name  less .adoc
       description: 'Internal links to other Docs'
-    return([suggestion])
+    return(suggestion)
 
 
   loadCompletions: ->
-    docData = fs.readFileSync('/Users/nearnshaw/.atom/packages/link-autocomplete/content_list.csv').toString()
+    docData = fs.readFileSync(csvPath).toString()
     $lines = docData.split("\n")
     for i of $lines
       if $lines[i]
