@@ -2,8 +2,8 @@
   "name": "link-autocomplete",
   "main": "./lib/link-autocomplete",
   "version": "0.0.1",
-  "description": "Autocomplete for internal links in documentation. Requres Autocomplete-Plus",
-  "repository": "https://github.com/atom/link-autocomplete",
+  "description": "Autocomplete for internal links in documentation. Requres Autocomplete-Plus. It references a CSV file that lists the available links. In provider.coffee, change the first line to the path where the referenced CSV is",
+  "repository": "https://github.com/mulesoft-labs/mulesoft-docs-link-autocomplete",
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
