@@ -8,7 +8,7 @@ csvPath = "/Users/nearnshaw/.atom/packages/link-autocomplete/content_list.csv"
 # csv input format : <pretty section name>, <topic title>, <filename>, <complete file path>
 # eg: CloudHub, CloudHuv Overview, cloudhub-overview, http://www.mulesoft.org/documentation/display/current/cloudhub/cloudhub-overview
 
-
+fs = require 'fs'
 
 $topic = []
 $section = []
