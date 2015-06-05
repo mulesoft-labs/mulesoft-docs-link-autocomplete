@@ -24,4 +24,12 @@ You may get a warning message about the CSV file not existing. This error is exp
 csvPath = "../content_list.csv"
 ----
 +
-. Once you've declared the new path to the CSV file, you can start using the plugin.
+. Once you've declared the new path to the CSV file, you can start using the package.
+
+== How to Use
+
+. Once the package has been installed, simply start typing `link:` in an adoc file, and whatever text follows will be searched in the CSV file. 
+. Once you've found the entry you're looking for, press kbd:[Enter]. 
++
+[IMPORTANT]
+Due to a bug, currently you'll have to delete the text you started typing.
