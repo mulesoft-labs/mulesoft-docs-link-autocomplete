@@ -29,7 +29,7 @@ csvPath = "../content_list.csv"
 == How to Use
 
 . Once the package has been installed, simply start typing `link:` in an adoc file, and whatever text follows will be searched in the CSV file. 
-. Once you've found the entry you're looking for, press kbd:[Enter]. 
+. Once you've found the entry you're looking for, press *Enter*. 
 +
 [IMPORTANT]
 Due to a bug, currently you'll have to delete the text you started typing.
