@@ -15,3 +15,13 @@ Make sure you that you've enabled hidden folders, otherwise you won't be able to
 +
 [NOTE]
 You may get a warning message about the CSV file not existing. This error is expected because you need to provide the local path to the CSV file where the package will read link data.
++
+. Navigate to the *../lib/provider.coffee* file in the package folder. You will need to edit this file with an updated path to the CSV file.
+. The *provider.coffee* file starts with the following variable declaration, which needs to be changed with the proper path of the CSV file:
++
+[source]
+----
+csvPath = "../content_list.csv"
+----
++
+. Once you've declared the new path to the CSV file, you can start using the plugin.
