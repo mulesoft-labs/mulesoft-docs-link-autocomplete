@@ -5,7 +5,7 @@ This is a package for Atom that reads a CSV file of links and displays those lin
 == How to Install
 
 [TIP]
-Make sure you that you've enabled hidden folders, otherwise you won't be able to see the .atom folder in your user directory.
+Make sure you that you've enabled hidden folders, otherwise you won't be able to see the *.atom* folder in your user directory.
 
 . Either clone this repository or download a .zip file of its contents.
 . Put the entire package folder in the *user.name/.atom/packages* folder.
