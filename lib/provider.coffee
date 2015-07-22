@@ -84,3 +84,6 @@ module.exports =
     topic = topic.toLowerCase()
     console.log 'comparing topic ' + topic + ' with prefix ' + prefix
     return true if topic.indexOf(prefix) > -1
+
+  onDidInsertSuggestion: ({editor, triggerPosition}) ->
+    atom.commands.dispatch(atom.views.getView(editor), 'snippets:expand')
