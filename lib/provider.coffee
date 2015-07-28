@@ -25,17 +25,18 @@ module.exports =
     prefix = @getPrefix(editor, bufferPosition)
     return unless prefix?.length
     prefix = prefix.substr(5)    #get rid of 'link:''
-    console.log 'new prefix = ' + prefix
+    #console.log 'new prefix = ' + prefix
     suggestionList = []  #to hold indexes with results
+    #triggerPosition = [bufferPosition.row, 0]
 
     for listIndex of $topic
       if @matchWords($topic[listIndex], prefix)
-        console.log 'found a match'
-        suggestionList.push(@addSuggestion(listIndex))
+        #console.log 'found a match'
+        suggestionList.push(@addSuggestion(listIndex, prefix))
     for listIndex of $topic
       if @matchWords($section[listIndex], prefix)
-        console.log 'matches section name'
-        suggestionList.push(@addSuggestion(listIndex))
+        #console.log 'matches section name'
+        suggestionList.push(@addSuggestion(listIndex, prefix))
     suggestionList
 
     # resultCompletions = []
@@ -46,14 +47,18 @@ module.exports =
 
 
 
-  addSuggestion: (listIndex) ->
+  addSuggestion: (listIndex, prefix) ->
+    #console.log 'BEFORE ------------'
+    #console.log suggestion
     suggestion =
       text: $url[listIndex] + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
-      replacementText: "cualquiera"
       displayText: $topic[listIndex]  #Cloudhub Overview   #topic title
       leftLabel: $section[listIndex]  #'CloudHub'      #section
       rightLabel: $name[listIndex].substr(0, $name[listIndex].length-5) # 'cloudhub-overview'   #file name  less .adoc
       description: 'Internal links to other Docs'
+      replacementPrefix: prefix
+    #console.log 'AFTER ------------'
+    #console.log suggestion
     return(suggestion)
 
 
@@ -62,28 +67,38 @@ module.exports =
     $lines = docData.split("\n")
     for i of $lines
       if $lines[i]
-        $fields = $lines[i].split(',')
+        $fields = $lines[i].split(/\s*,\s*/)
         $topic.push($fields[0])
         $section.push($fields[1])
         $name.push($fields[2])
         $url.push($fields[3])
     console.log 'csv list has ' + $lines.length + ' entries'
     console.log $name[0]
-    console.log $section[3]
+    #console.log $section[3]
+    #console.log $url
 
   getPrefix: (editor, bufferPosition) ->
     # Whatever your prefix regex might be
-    regex = /\blink:.+/
+    #regex = /\blink:.+(?!.*link:.)/
+    regex = /.*(\blink:.+)$/
     # Get the text for the line up to the triggered buffer position
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
     # Match the regex to the line, and return the match
-    line.match(regex)?[0] or ''
-
+    matches = line.match(regex)
+    #console.log "PREFIX #{matches?[1]}"
+    return matches?[1] or ''
 
   matchWords: (topic, prefix) ->
     topic = topic.toLowerCase()
     console.log 'comparing topic ' + topic + ' with prefix ' + prefix
     return true if topic.indexOf(prefix) > -1
-
+###
   onDidInsertSuggestion: ({editor, triggerPosition}) ->
+    console.log 'INSERT!!!'
+    console.log 'OLD triggerPosition: ' + triggerPosition
+    line = editor.getTextInRange([triggerPosition.row, 0], [triggerPosition.row, triggerPosition.column])
+    prefixStart =line.search(/\blink:.+/)
+    triggerPosition = [triggerPosition.row, prefixStart]
+    console.log 'NEW triggerPosition: ' + triggerPosition
     atom.commands.dispatch(atom.views.getView(editor), 'snippets:expand')
+###
