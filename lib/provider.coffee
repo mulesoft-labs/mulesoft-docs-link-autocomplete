@@ -5,8 +5,9 @@
 csvPath = "/Users/nearnshaw/.atom/packages/link-autocomplete/content_list.csv"
 #============================================
 
-# csv input format : <pretty section name>, <topic title>, <filename>, <complete file path>
-# eg: CloudHub, CloudHuv Overview, cloudhub-overview, http://www.mulesoft.org/documentation/display/current/cloudhub/cloudhub-overview
+# csv input format : <topic title>, <pretty section name>, <version name>, <filename>, <complete file path>
+# eg: CloudHub Overview, CloudHub, 3.7, cloudhub-overview.asciidoc,http://www.mulesoft.org/documentation/display/current/cloudhub/cloudhub-overview
+
 
 fs = require 'fs'
 
@@ -14,6 +15,7 @@ $topic = []
 $section = []
 $name = []
 $url = []
+$version = []
 
 module.exports =
   selector: '.source.asciidoc'
@@ -52,7 +54,7 @@ module.exports =
     #console.log suggestion
     suggestion =
       text: $url[listIndex] + '[' + $topic[listIndex] + ']' #'link:\cloudhub\cloudhub-overview[CloudHub Overview]' #print
-      displayText: $topic[listIndex]  #Cloudhub Overview   #topic title
+      displayText: $topic[listIndex] + ' - ' + $version[listIndex]  #Cloudhub Overview - 3.7   #topic title
       leftLabel: $section[listIndex]  #'CloudHub'      #section
       rightLabel: $name[listIndex].substr(0, $name[listIndex].length-5) # 'cloudhub-overview'   #file name  less .adoc
       description: 'Internal links to other Docs'
@@ -70,8 +72,9 @@ module.exports =
         $fields = $lines[i].split(/\s*,\s*/)
         $topic.push($fields[0])
         $section.push($fields[1])
-        $name.push($fields[2])
-        $url.push($fields[3])
+        $version.push($fields[2])
+        $name.push($fields[3])
+        $url.push($fields[4])
     console.log 'csv list has ' + $lines.length + ' entries'
     console.log $name[0]
     #console.log $section[3]
