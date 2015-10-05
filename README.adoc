@@ -26,7 +26,7 @@ csvPath = "../content_list.csv"
 ----
 +
 [NOTE]
-The CSV file included in this repo is merely a sample. The CSV file you must reference here, the one with the whole list of contents in our asciidoc repo, can be found in https://github.com/mulesoft/mulesoft-docs. Please download this other repository to your disk and reference the file `links.csv` in it.
+The CSV file included in this repo is merely a sample. The CSV file that you must reference here – the one with the whole list of contents in our asciidoc repo – can be found in https://github.com/mulesoft/mulesoft-docs. Please download this other repository to your disk and reference the included `links.csv` in your *provider.coffee* file.
 
 . Once you've declared the new path to the CSV file, you can start using the package.
 
